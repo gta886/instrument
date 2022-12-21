@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui-v2.6.8/layui/css/layui.css">
+</head>
+<body>
+
+<div class="site-text" style="margin: 5%; display: none" id="window"  target="test123">
+    <form class="layui-form" id="book" method="post" lay-filter="example">
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库编号</label>
+            <div class="layui-input-block">
+                <input type="text" id="wid" name="wid" lay-verify="title" autocomplete="on" placeholder="请输入编号" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库名称</label>
+            <div class="layui-input-block">
+                <input type="text" id="wname" name="wname" lay-verify="title" autocomplete="off" placeholder="请输入名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库容量</label>
+            <div class="layui-input-block">
+                <input type="text" id="wcapacity" name="wcapacity" lay-verify="title" autocomplete="off" placeholder="请输入容量" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库剩余量</label>
+            <div class="layui-input-block">
+                <input type="text" id="wleft" name="wleft" lay-verify="title" autocomplete="off" placeholder="请输入剩余量" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库状态</label>
+            <div class="layui-input-block">
+                <input type="text" id="wstatus" name="wstatus" lay-verify="title" autocomplete="off" placeholder="请输入状态" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库备注</label>
+            <div class="layui-input-block">
+                <input type="text" id="wcomment" name="wcomment" lay-verify="title" autocomplete="off" placeholder="请输入备注" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库分区数</label>
+            <div class="layui-input-block">
+                <input type="text" id="wblocknum" name="wblocknum" lay-verify="title" autocomplete="off" placeholder="请输入分区数" class="layui-input">
+            </div>
+        </div>
+
+
+        <!--  <div class="layui-form-item">
+           <div class="layui-input-block">
+             <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+           </div>
+         </div> -->
+    </form>
+</div>
+
+<div style="padding-top: 30px;padding-left: 5px">
+    <div class="layui-inline">
+          仓库名：
+        <div class="layui-inline">
+            <input class="layui-input" name="s_title" autocomplete="off" />
+        </div>
+        <button class="layui-btn" lay-submit="" lay-filter="reload">搜索</button>
+        <button id="add" class="layui-btn" lay-submit="" lay-filter="pageSubmit">新增</button>
+    </div>
+
+    <table class="layui-hide" id="demo" lay-filter="test" >
+
+</table>
+</div>
+<script src="../static/layui-v2.6.8/layui/layui.js"></script>
+<script>
+    // var table = null;
+    //
+    // var data = [
+    //
+    //     {id: 1, username1: 'test1'},{id: 2, username1: 'test2'},{id: 3, username1: 'test3'}
+    //
+    // ];
+    //
+    //
+    //
+    // var len = data.length;
+    //
+    // for(var i = 0; i < 3; i++) { // 追加新数据
+    //
+    //     data.push({id: len+i+1, username: 'test'+(len+i+1)});
+    //
+    // }
+    //
+    // table.reload('demo', {
+    //
+    //     data: data // 调用table.reload 重新渲染显示加载追加了数据的表格
+    //
+    // });
+
+    // var data = [
+    //
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 2, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //     {id: 1, name1: 'test1',name2 :'test2',name3:'sd',name4:' sdf',name5:'sdfsa'},
+    //
+    // ];
+
+        var layer = layui.layer;
+        var token = sessionStorage.getItem("waretoken");
+        var $ = layui.$;
+
+        $.ajax(
+            {
+                url: "http://localhost:8000/test/warehouse",
+                type: "get",
+
+                ContentType:'application/json;charset=utf8',
+                headers:{'token':token},
+                success: function (data) {
+                    console.log(data.data);
+                    var re = data.data ;
+                    console.log(re[1]);
+                    var ll = data.data;
+                    layui.use(function ()
+                    {
+
+                        var layer = layui.layer,table = layui.table;
+
+
+                        table.render(
+                            {
+                                elem:'#demo',
+                                height:420,
+                                // url:'www.baidu.com',
+                                title:'table1',
+                                page:true,
+
+                                totalRow: true,
+                                cols:[[
+                                    {field:'wname',title:'仓库名称',width:150,height:100},
+                                    {field:'wcapacity',title:'仓库容量',width:150},
+                                    {field:'wleft',title:'仓库剩余量',width:150},
+                                    {field:'wstatus',title:'仓库状态',width:150},
+                                    {field:'wcomment',title:'备注',width:150},
+                                    {field:'wblocknum',title:'仓库分区数',width:150},
+                                    {field:'operate',title:'仓库操作',toolbar:'#bar',width:300}
+
+
+                                ]],
+                                contentType: "application/x-www-form-urlencoded"
+
+
+
+
+                                ,data:ll
+                            });
+
+                        table.on('tool(test)', function(obj){
+                            var data = obj.data;
+                            layer.open({
+                                type: 1
+                                ,title: ['修改信息']
+                                ,btn: ['确定', '取消']
+                                ,shadeClose: true
+                                ,shade: 0
+                                ,maxmin: true
+                                ,content:$("#window")
+                                ,success:function(layero,index){
+                                    $('#wid').val(data.wid);
+                                    $('#wname').val(data.wname);
+
+                                }
+                            });
+                        });
+
+
+                        //anniu
+
+
+
+
+                    });
+
+                }
+
+            });
+
+
+
+
+
+
+        // var table = null;
+
+
+
+
+        // var len = data.length;
+        //
+        // for(var i = 0; i < 3; i++) { // 追加新数据
+        //
+        //     data.push({id: len+i+1, username: 'test'+(len+i+1)});
+        //
+        // }
+        //
+        // table.reload('demo', {
+        //
+        //     data: data // 调用table.reload 重新渲染显示加载追加了数据的表格
+        //
+        // });
+
+
+
+
+
+
+
+
+</script>
+<script type="text/html" id="bar">
+
+
+<button class="layui-btn tbar" id="tbar1" onclick="function1();">修改</button>
+<button class="layui-btn layui-btn-danger" id="tbar2" onclick="function2();">删除</button>
+</script>
+<script>
+function function1()
+{
+    var layer = layui.layer;
+    console.log("sss");
+    layer.msg("ssss");
+
+    layer.open({
+
+        type: 1,
+        title:"修改信息",
+        area:['50%','50%'],
+        btn: ['确定', '取消'],
+        content: $("#window"),
+        yes:function(index,layero){
+        }
+
+    });
+
+
+
+}
+
+function  function2()
+{
+    var layer = layui.layer;
+    layer.confirm("确定删除吗？",
+        {btn:["确定","取消"]
+
+        }
+    );
+    console.log("sss2");
+}
+
+</script>
+</body>
+</html>
